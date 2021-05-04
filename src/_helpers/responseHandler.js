@@ -5,10 +5,25 @@ export const responseHandler = {
             alert(json.message);
             return false;
         }
+
+        if (json.errors != undefined) {
+            console.log(json);
+            let msg = '';
+            for (let key in json.errors) {
+                msg += json.errors[key].join('. ') + ' ';
+            }
+            alert(msg);
+            return false;
+        }
         return true;
     },
-    async parseResponse(response) {
-        let json = await response.json()
-        return {isSuccess: this.isSuccess(json), json: json}
+    parseResponse(response) {
+        return response.json().then((json) => {
+            if (this.isSuccess(json)) {
+                return Promise.resolve(json);
+            } else {
+                return Promise.reject(json);
+            }
+        })
     }
 }

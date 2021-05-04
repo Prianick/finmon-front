@@ -13,21 +13,17 @@ export const currencyStore = {
             context.state.loading = true;
             currencyService.getAvailableCurrencies().then(
                 (response) => {
-                    if (response.isSuccess) {
-                        context.commit('fillList', response.json)
-                    }
+                    console.log(response)
+                    context.commit('fillList', response)
                 },
-                (error) => errorHandler.fireError(context.state, error),
+                        (error) => errorHandler.fireError(context.state, error)
+                ,
             )
         },
         getExchangeRate(context, params) {
             context.state.loading = true;
             currencyService.getExchangeRate(params).then(
-                (response) => {
-                    if (response.isSuccess) {
-                        context.commit('setExchangeRate', response.json)
-                    }
-                },
+                (response) => context.commit('setExchangeRate', response),
                 (error) => errorHandler.fireError(context.state, error),
             )
         }
@@ -41,7 +37,10 @@ export const currencyStore = {
             state.exchangeRate = response.exchangeRate;
             state.date = response.date;
             state.loading = false;
-            console.log(state.exchangeRate)
+        },
+        setExchangeRateToNull(state) {
+            state.exchangeRate = null;
+            state.date = null;
         }
     }
 }

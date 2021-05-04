@@ -1,16 +1,17 @@
 <template>
-    <div>
-        <h3>Currency</h3>
+    <div class="container">
         <div>
+            Currencies
             <v-select v-model="currency1" :options="currencyList"></v-select>
             <v-select v-model="currency2" :options="currencyList"></v-select>
-            Select date:
-            <datepicker v-model="date"></datepicker>
+            Date:
+            <datepicker v-model="date" :disabled-dates="disabledDates"></datepicker>
             <br>
-            <button @click="getExchangeRate">Get Exchange Rate</button>
+            <button class="get-exchange-btn" @click="getExchangeRate">Get Exchange Rate</button>
             <br>
             <h3 v-if="exchangeRate != null">
-                Exchange Rate: {{ currency1 }}/{{ currency2 }} = {{ exchangeRate }}
+                Exchange Rate: <br>
+                {{ currency1 }}/{{ currency2 }} = {{ exchangeRate }}
             </h3>
         </div>
     </div>
@@ -34,6 +35,9 @@ export default {
             currency2: '',
             defaultDate: new Date(),
             date: null,
+            disabledDates: {
+                from': new Date()
+            }
         }
     },
     created() {
@@ -54,7 +58,7 @@ export default {
     },
     methods: {
         getExchangeRate: function () {
-            this.exchangeRate = null;
+            this.$store.commit('setExchangeRateToNull');
             const payload = {
                 currency1: this.currency1,
                 currency2: this.currency2,
@@ -66,7 +70,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 h3 {
     margin: 40px 0 0;
 }
@@ -83,5 +87,32 @@ li {
 
 a {
     color: #42b983;
+}
+
+.vdp-datepicker input {
+    appearance: none;
+    display: flex;
+    background: none;
+    border: 1px solid rgba(60, 60, 60, .26);
+    border-radius: 4px;
+    white-space: normal;
+    padding: 10px;
+    width: 100%;
+    font-family: inherit;
+}
+
+.get-exchange-btn {
+    border: 1px solid rgba(60, 60, 60, .26);
+    border-radius: 4px;
+    white-space: normal;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.container {
+    width: 300px;
+    margin: auto;
 }
 </style>
