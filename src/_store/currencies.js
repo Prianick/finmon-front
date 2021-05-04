@@ -12,12 +12,8 @@ export const currencyStore = {
         getAvailableCurrencies(context) {
             context.state.loading = true;
             currencyService.getAvailableCurrencies().then(
-                (response) => {
-                    console.log(response)
-                    context.commit('fillList', response)
-                },
-                        (error) => errorHandler.fireError(context.state, error)
-                ,
+                (response) => context.commit('fillList', response),
+                (error) => errorHandler.fireError(context.state, error),
             )
         },
         getExchangeRate(context, params) {

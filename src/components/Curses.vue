@@ -36,7 +36,7 @@ export default {
             defaultDate: new Date(),
             date: null,
             disabledDates: {
-                from': new Date()
+                from: new Date()
             }
         }
     },

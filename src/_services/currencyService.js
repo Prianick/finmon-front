@@ -1,6 +1,5 @@
 import {convertToUrlParams} from "@/_helpers/request-functions";
 import {responseHandler} from "@/_helpers/responseHandler";
-import {errorHandler} from "@/_helpers/errorHandler";
 
 export const currencyService = {
     async getAvailableCurrencies() {
